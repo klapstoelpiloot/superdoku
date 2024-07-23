@@ -16,7 +16,7 @@ namespace Superdoku.Windows
         private static readonly Brush ValueFontBrush = Brushes.Black;
         private static readonly Brush OptionsFontBrush = Brushes.DimGray;
         private const double ValueFontSizeFactor = 0.7;
-        private const double OptionsFontSizeFactor = 0.2;
+        private const double OptionsFontSizeFactor = 0.25;
 
         private Puzzle? puzzle;
 
@@ -28,7 +28,7 @@ namespace Superdoku.Windows
             // TEST: Remove this
             puzzle = new Puzzle(PuzzleSize.Size9);
             puzzle.Cells[0, 0].Value = 2;
-            puzzle.Cells[1, 1].Options.AddRange(new int[] { 4, 9, 7, 1 });
+            puzzle.Cells[1, 1].AddOptionsRange([4, 9, 7, 1, 22, 33, 44, 55, 66, 77, 88, 99]);
             puzzle.Cells[2, 0].Value = 1;
             puzzle.Cells[7, 0].Value = 6;
             puzzle.Cells[1, 4].Value = 9;
@@ -83,23 +83,32 @@ namespace Superdoku.Windows
                     else
                     {
                         int index = 0;
-                        for(int y1 = 0; y1 < 3; y++)
+                        for(int y1 = 0; y1 < 3; y1++)
                         {
                             if(index >= c.Options.Count)
                                 break;
 
-                            for(int x1 = 0; x1 < 3; x++)
+                            for(int x1 = 0; x1 < 3; x1++)
                             {
                                 if(index >= c.Options.Count)
                                     break;
 
+                                // If there are more options than we can fit, we draw dots in the last place
+                                string symbol = c.Options[index].ToString();
+                                if((y1 == 2) && (x1 == 2) && (c.Options.Count > (index + 1)))
+                                {
+                                    symbol = "...";
+                                }
+
                                 // Draw an option
-                                FormattedText optionft = new FormattedText(c.Options[index].ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+                                FormattedText optionft = new FormattedText(symbol, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                                     OptionsFont, optionssize, OptionsFontBrush, pixelsperdip);
                                 optionft.TextAlignment = TextAlignment.Center;
                                 optionft.Trimming = TextTrimming.None;
                                 optionft.MaxTextWidth = optionscellsize;
                                 dc.DrawText(optionft, new Point(px + x * cellsize + x1 * optionscellsize, py + y * cellsize + y1 * optionscellsize));
+
+                                index++;
                             }
                         }
                     }

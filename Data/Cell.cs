@@ -11,11 +11,42 @@
         /// <summary>
         /// Value options to consider for this cell.
         /// </summary>
-        public List<int> Options { get; }
+        public IReadOnlyList<int> Options => options;
+        private List<int> options = new List<int>();
 
         public Cell(int range)
         {
-            Options = new List<int>(range);
+        }
+
+        public void AddOption(int option)
+        {
+            if(!options.Contains(option))
+            {
+                options.Add(option);
+                options.Sort();
+            }
+        }
+
+        public void AddOptionsRange(IEnumerable<int> options)
+        {
+            foreach(int o in options)
+            {
+                if(!this.options.Contains(o))
+                {
+                    this.options.Add(o);
+                }
+            }
+            this.options.Sort();
+        }
+
+        public void RemoveOption(int option)
+        {
+            options.Remove(option);
+        }
+
+        public void ClearOptions()
+        {
+            options.Clear();
         }
     }
 }
