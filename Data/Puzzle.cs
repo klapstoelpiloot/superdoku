@@ -2,7 +2,10 @@
 {
     internal class Puzzle
     {
-        public static readonly int[] VALID_RANGES = [4, 9, 16, 25, 36];
+        /// <summary>
+        /// The size of this puzzle.
+        /// </summary>
+        public PuzzleSize Size { get; }
 
         /// <summary>
         /// The length of an entire row or column,
@@ -22,19 +25,17 @@
         /// </summary>
         public Cell[,] Cells { get; }
 
-        public Puzzle(int range)
+        public Puzzle(PuzzleSize size)
         {
-            if (!VALID_RANGES.Contains(range))
-                throw new ArgumentException($"Invalid puzzel range '{range}'");
-
             // Setup field
-            Range = range;
-            RegionRange = (int)Math.Sqrt(range);
-            Cells = new Cell[range, range];
-            for (int x = 0; x < range; x++)
+            Size = size;
+            Range = (int)size;
+            RegionRange = (int)Math.Sqrt(Range);
+            Cells = new Cell[Range, Range];
+            for (int x = 0; x < Range; x++)
             {
-                for (int y = 0; y < range; y++)
-                    Cells[x, y] = new Cell(range);
+                for (int y = 0; y < Range; y++)
+                    Cells[x, y] = new Cell(Range);
             }
         }
     }

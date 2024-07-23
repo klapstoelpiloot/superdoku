@@ -26,8 +26,9 @@ namespace Superdoku.Windows
             InitializeComponent();
 
             // TEST: Remove this
-            puzzle = new Puzzle(9);
+            puzzle = new Puzzle(PuzzleSize.Size9);
             puzzle.Cells[0, 0].Value = 2;
+            puzzle.Cells[1, 1].Options.AddRange(new int[] { 4, 9, 7, 1 });
             puzzle.Cells[2, 0].Value = 1;
             puzzle.Cells[7, 0].Value = 6;
             puzzle.Cells[1, 4].Value = 9;
@@ -58,10 +59,12 @@ namespace Superdoku.Windows
             double px = Math.Round((paddedwidth - psize) / 2 + Padding.Left);
             double py = Math.Round((paddedheight - psize) / 2 + Padding.Top);
             double cellsize = psize / puzzle.Range;
+            double optionscellsize = cellsize / 3;
             double pixelsperdip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
 
             // Draw the values and options
             double valuesize = cellsize * ValueFontSizeFactor;
+            double optionssize = cellsize * OptionsFontSizeFactor;
             for(int x = 0; x < puzzle.Range; x++)
             {
                 for(int y = 0; y < puzzle.Range; y++)
@@ -74,13 +77,31 @@ namespace Superdoku.Windows
                             ValueFont, valuesize, ValueFontBrush, pixelsperdip);
                         valueft.TextAlignment = TextAlignment.Center;
                         valueft.Trimming = TextTrimming.None;
-                        valueft.MaxTextWidth = cellsize * pixelsperdip;
+                        valueft.MaxTextWidth = cellsize;
                         dc.DrawText(valueft, new Point(px + x * cellsize, py + y * cellsize));
                     }
                     else
                     {
-                        // Draw options
+                        int index = 0;
+                        for(int y1 = 0; y1 < 3; y++)
+                        {
+                            if(index >= c.Options.Count)
+                                break;
 
+                            for(int x1 = 0; x1 < 3; x++)
+                            {
+                                if(index >= c.Options.Count)
+                                    break;
+
+                                // Draw an option
+                                FormattedText optionft = new FormattedText(c.Options[index].ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+                                    OptionsFont, optionssize, OptionsFontBrush, pixelsperdip);
+                                optionft.TextAlignment = TextAlignment.Center;
+                                optionft.Trimming = TextTrimming.None;
+                                optionft.MaxTextWidth = optionscellsize;
+                                dc.DrawText(optionft, new Point(px + x * cellsize + x1 * optionscellsize, py + y * cellsize + y1 * optionscellsize));
+                            }
+                        }
                     }
                 }
             }

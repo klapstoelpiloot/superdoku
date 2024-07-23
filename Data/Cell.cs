@@ -10,13 +10,12 @@
 
         /// <summary>
         /// Value options to consider for this cell.
-        /// The size of this array is range-1 and the first item (0) represents value 1.
         /// </summary>
-        public bool[] Options { get; }
+        public List<int> Options { get; }
 
         public Cell(int range)
         {
-            Options = new bool[range];
+            Options = new List<int>(range);
         }
     }
 }
