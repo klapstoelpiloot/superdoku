@@ -1,7 +1,10 @@
 ﻿namespace Superdoku.Data
 {
-    internal class Cell
+    public class Cell
     {
+        public static readonly char[] ELEMENTS = ['.', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+            'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'];
+
         /// <summary>
         /// Definite value for this cell.
         /// When this is 0, then no definite value has been assigned.
@@ -48,5 +51,7 @@
         {
             options.Clear();
         }
+
+        public static int ValueOfElement(char e) { return Array.IndexOf(ELEMENTS, e); }
     }
 }

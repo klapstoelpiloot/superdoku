@@ -1,6 +1,6 @@
 ﻿namespace Superdoku.Data
 {
-    internal class Puzzle
+    public class Puzzle
     {
         /// <summary>
         /// The size of this puzzle.
@@ -37,6 +37,10 @@
                 for (int y = 0; y < Range; y++)
                     Cells[x, y] = new Cell(Range);
             }
+
+            // Check our code compatability
+            if(Cell.ELEMENTS.Length < Range)
+                throw new NotSupportedException("Cell.ELEMENTS array does not support a puzzle of this size.");
         }
     }
 }

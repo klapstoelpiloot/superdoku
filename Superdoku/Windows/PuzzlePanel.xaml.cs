@@ -3,10 +3,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Globalization;
+using System;
 
 namespace Superdoku.Windows
 {
-    internal partial class PuzzlePanel : UserControl
+    public partial class PuzzlePanel : UserControl
     {
         private static readonly Pen CellLine = new Pen(Brushes.Gray, 1);
         private static readonly Pen RegionLine = new Pen(Brushes.DimGray, 3);
@@ -24,19 +25,6 @@ namespace Superdoku.Windows
         public PuzzlePanel()
         {
             InitializeComponent();
-
-            // TEST: Remove this
-            puzzle = new Puzzle(PuzzleSize.Size9);
-            puzzle.Cells[0, 0].Value = 2;
-            puzzle.Cells[1, 1].AddOptionsRange([4, 9, 7, 1, 22, 33, 44, 55, 66, 77, 88, 99]);
-            puzzle.Cells[2, 0].Value = 1;
-            puzzle.Cells[7, 0].Value = 6;
-            puzzle.Cells[1, 4].Value = 9;
-            puzzle.Cells[0, 7].Value = 3;
-            puzzle.Cells[4, 3].Value = 4;
-            puzzle.Cells[5, 1].Value = 5;
-            puzzle.Cells[6, 8].Value = 7;
-            puzzle.Cells[8, 6].Value = 8;
         }
 
         public void SetPuzzle(Puzzle? puzzle)
@@ -73,7 +61,8 @@ namespace Superdoku.Windows
                     if(c.Value > 0)
                     {
                         // Draw a definite value
-                        FormattedText valueft = new FormattedText(c.Value.ToString(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+                        string element = Cell.ELEMENTS[c.Value].ToString();
+                        FormattedText valueft = new FormattedText(element, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                             ValueFont, valuesize, ValueFontBrush, pixelsperdip);
                         valueft.TextAlignment = TextAlignment.Center;
                         valueft.Trimming = TextTrimming.None;
@@ -94,14 +83,14 @@ namespace Superdoku.Windows
                                     break;
 
                                 // If there are more options than we can fit, we draw dots in the last place
-                                string symbol = c.Options[index].ToString();
+                                string element = Cell.ELEMENTS[c.Options[index]].ToString();
                                 if((y1 == 2) && (x1 == 2) && (c.Options.Count > (index + 1)))
                                 {
-                                    symbol = "...";
+                                    element = "...";
                                 }
 
                                 // Draw an option
-                                FormattedText optionft = new FormattedText(symbol, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
+                                FormattedText optionft = new FormattedText(element, CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                                     OptionsFont, optionssize, OptionsFontBrush, pixelsperdip);
                                 optionft.TextAlignment = TextAlignment.Center;
                                 optionft.Trimming = TextTrimming.None;

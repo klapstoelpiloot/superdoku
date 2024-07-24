@@ -3,7 +3,7 @@
     /// <summary>
     /// The various sizes of a sudoku puzzle we support
     /// </summary>
-    internal enum PuzzleSize
+    public enum PuzzleSize
     {
         // A 4x4 sudoku.
         Size4 = 4,

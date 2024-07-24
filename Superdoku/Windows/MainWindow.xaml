@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Superdoku"
         xmlns:windows="clr-namespace:Superdoku.Windows"
-		x:ClassModifier="internal"
         mc:Ignorable="d"
         Title="Superdoku" Height="600" Width="800">
 	<DockPanel>
