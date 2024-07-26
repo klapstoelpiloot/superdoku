@@ -16,6 +16,7 @@ namespace Superdoku.Windows
         private static readonly Typeface OptionsFont = new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
         private static readonly Brush ValueFontBrush = Brushes.Black;
         private static readonly Brush OptionsFontBrush = Brushes.DimGray;
+        private static readonly Brush FixedCellBrush = new SolidColorBrush(Color.FromRgb(240, 240, 240));
         private const double ValueFontSizeFactor = 0.7;
         private const double OptionsFontSizeFactor = 0.25;
 
@@ -46,9 +47,23 @@ namespace Superdoku.Windows
             double psize = (paddedwidth > paddedheight) ? paddedheight : paddedwidth;
             double px = Math.Round((paddedwidth - psize) / 2 + Padding.Left);
             double py = Math.Round((paddedheight - psize) / 2 + Padding.Top);
-            double cellsize = psize / puzzle.Range;
+            double cellsize = Math.Round(psize / puzzle.Range);
+            psize = cellsize * puzzle.Range;
             double optionscellsize = cellsize / 3;
             double pixelsperdip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+
+            // Draw a darker background for fixed cells
+            for(int x = 0; x < puzzle.Range; x++)
+            {
+                for(int y = 0; y < puzzle.Range; y++)
+                {
+                    if(puzzle.Cells[x, y].Fixed)
+                    {
+                        Rect r = new Rect(px + x * cellsize, py + y * cellsize, cellsize, cellsize);
+                        dc.DrawRectangle(FixedCellBrush, null, r);
+                    }
+                }
+            }
 
             // Draw the values and options
             double valuesize = cellsize * ValueFontSizeFactor;
@@ -108,7 +123,7 @@ namespace Superdoku.Windows
             DrawSquareGrid(dc, puzzle.Range, px, py, cellsize, CellLine);
 
             // Draw the region lines
-            DrawSquareGrid(dc, puzzle.RegionRange, px, py, psize / puzzle.RegionRange, RegionLine);
+            DrawSquareGrid(dc, puzzle.RegionRange, px, py, Math.Round(psize / puzzle.RegionRange), RegionLine);
 
             // Outer border rectangle
             dc.DrawRectangle(null, BorderLine, new Rect(px, py, psize, psize));

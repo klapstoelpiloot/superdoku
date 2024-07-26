@@ -1,4 +1,5 @@
 ﻿using Superdoku.Data;
+using System.Diagnostics;
 
 namespace Superdoku.Solver
 {
@@ -6,7 +7,8 @@ namespace Superdoku.Solver
     {
         // These are the different methods in order in which we will try to use them
         private readonly ISolverMethod[] methods = [
-                new EliminationMethod()
+                new EliminationMethod1(),
+                new EliminationMethod2()
             ];
 
         private readonly Puzzle puzzle;
@@ -26,7 +28,10 @@ namespace Superdoku.Solver
             foreach (ISolverMethod m in methods)
             {
                 if (m.SolveOneStep(puzzle))
+                {
+                    Trace.WriteLine($"Used method {m.GetType().Name}");
                     return true;
+                }
             }
             return false;
         }

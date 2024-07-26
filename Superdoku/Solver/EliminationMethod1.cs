@@ -1,12 +1,13 @@
 ﻿using Superdoku.Data;
+using Superdoku.Tools;
 
 namespace Superdoku.Solver
 {
     /// <summary>
-    /// Elimination checks the row, column and region of each cell to see if a definitive
+    /// This checks the row, column and region of each cell to see if a definitive
     /// value can be chosen for that cell and otherwise lists the options.
     /// </summary>
-    public class EliminationMethod : ISolverMethod
+    public class EliminationMethod1 : ISolverMethod
     {
         /// <summary>
         /// Attempts to progress the puzzle one step further.
@@ -14,9 +15,9 @@ namespace Superdoku.Solver
         /// </summary>
         public bool SolveOneStep(Puzzle puzzle)
         {
-            for(int x = 0; x < puzzle.Range; x++)
+            foreach(int x in Enumerable.Range(0, puzzle.Range).Shuffle())
             {
-                for(int y = 0; y < puzzle.Range; y++)
+                foreach(int y in Enumerable.Range(0, puzzle.Range).Shuffle())
                 {
                     if(puzzle.Cells[x, y].Value == 0)
                     {
