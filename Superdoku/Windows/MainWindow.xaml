@@ -9,7 +9,8 @@
         Title="Superdoku" Height="600" Width="800">
 	<DockPanel>
 		<ToolBar x:Name="toolbar" DockPanel.Dock="Top" Height="30" VerticalAlignment="Top">
-			<Button x:Name="openbutton" Click="OpenButton_Click">Open</Button>
+			<Button x:Name="openbutton" Click="OpenButton_Click" Padding="8,4,8,4">Open</Button>
+			<Button x:Name="solvestepbutton" Click="SolveStepButton_Click" Padding="8,4,8,4">Step</Button>
 		</ToolBar>
 		<windows:PuzzlePanel x:Name="canvas" Padding="20"/>
 	</DockPanel>

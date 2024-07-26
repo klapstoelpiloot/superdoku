@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Superdoku.Data;
 using Superdoku.IO;
+using Superdoku.Solver;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,6 +32,16 @@ namespace Superdoku.Windows
                 puzzle = PuzzleFileReader.Read(dlg.FileName);
                 canvas.SetPuzzle(puzzle);
             }
+        }
+
+        private void SolveStepButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(puzzle == null)
+                return;
+
+            PuzzleSolver solver = new PuzzleSolver(puzzle);
+            solver.SolveOneStep();
+            canvas.InvalidateVisual();
         }
     }
 }

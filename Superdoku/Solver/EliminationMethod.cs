@@ -1,9 +1,4 @@
 ﻿using Superdoku.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Superdoku.Solver
 {
@@ -19,25 +14,25 @@ namespace Superdoku.Solver
         /// </summary>
         public bool SolveOneStep(Puzzle puzzle)
         {
-            bool result = false;
             for(int x = 0; x < puzzle.Range; x++)
             {
                 for(int y = 0; y < puzzle.Range; y++)
                 {
-                    result |= TryCell(puzzle, x, y);
+                    if(puzzle.Cells[x, y].Value == 0)
+                    {
+                        if(TryCell(puzzle, x, y))
+                            return true;
+                    }
                 }
             }
-            return result;
+            return false;
         }
 
-        // Returns True when progress has been made
+        // Returns True when a definitive value has been found for the specified cell
         private bool TryCell(Puzzle puzzle, int x, int y)
         {
             Cell c = puzzle.Cells[x, y];
-
-            // Begin with all options open
-            c.ClearOptions();
-            c.AddOptionsRange(Enumerable.Range(1, puzzle.Range));
+            List<int> options = new List<int>(Enumerable.Range(1, puzzle.Range));
 
             // Eliminate options from cells in the same row
             for(int x1 = 0; x1 < puzzle.Range; x1++)
@@ -45,7 +40,7 @@ namespace Superdoku.Solver
                 int v = puzzle.Cells[x1, y].Value;
                 if((x1 != x) && (v > 0))
                 {
-                    c.RemoveOption(v);
+                    options.Remove(v);
                 }
             }
 
@@ -55,13 +50,13 @@ namespace Superdoku.Solver
                 int v = puzzle.Cells[x, y1].Value;
                 if((y1 != y) && (v > 0))
                 {
-                    c.RemoveOption(v);
+                    options.Remove(v);
                 }
             }
 
             // Eliminate options from cells in the same region
-            int rxs = x % puzzle.RegionRange;
-            int rys = y % puzzle.RegionRange;
+            int rxs = (x / puzzle.RegionRange) * puzzle.RegionRange;
+            int rys = (y / puzzle.RegionRange) * puzzle.RegionRange;
             for(int rx = rxs; rx < (rxs + puzzle.RegionRange); rx++)
             {
                 for(int ry = rys; ry < (rys + puzzle.RegionRange); ry++)
@@ -69,16 +64,21 @@ namespace Superdoku.Solver
                     int v = puzzle.Cells[rx, ry].Value;
                     if((rx != x) && (ry != y) && (v > 0))
                     {
-                        c.RemoveOption(v);
+                        options.Remove(v);
                     }
                 }
             }
 
-            // If there is only one option left, then that is the definitive value
-            if(c.Options.Count == 1)
+            // CHeck if we have found a definitive value
+            if(options.Count == 1)
             {
-                c.Value = c.Options[0];
+                c.Value = options[0];
                 c.ClearOptions();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
