@@ -45,7 +45,9 @@ namespace Superdoku.IO
                     // Valid element
                     int x = i % p.Range;
                     int y = i / p.Range;
-                    p.Cells[x, y].Value = Cell.ValueOfElement(c);
+                    Cell cell = p.Cells[x, y];
+                    cell.Value = Cell.ValueOfElement(c);
+                    cell.Fixed = true;
                 }
                 else
                 {

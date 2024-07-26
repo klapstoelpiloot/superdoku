@@ -12,10 +12,16 @@
         public int Value { get; set; } = 0;
 
         /// <summary>
+        /// True when this cell is fixed (given as part of the puzzle),
+        /// False when this cell can be changed by the user.
+        /// </summary>
+        public bool Fixed { get; set; } = false;
+
+        /// <summary>
         /// Value options to consider for this cell.
         /// </summary>
         public IReadOnlyList<int> Options => options;
-        private List<int> options = new List<int>();
+        private readonly List<int> options = new List<int>();
 
         public Cell(int range)
         {
