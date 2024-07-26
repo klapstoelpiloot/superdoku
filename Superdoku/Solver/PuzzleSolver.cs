@@ -40,10 +40,27 @@ namespace Superdoku.Solver
         /// This solves the entire puzzle.
         /// Returns True when the puzzle was solved or False when the puzzle could not be solved.
         /// </summary>
-        public void SolveComplete()
+        public bool SolveComplete()
         {
             // This needs work, but just nice to test this here
-            while(SolveOneStep());
+            while(!CheckAllCellsDefined())
+            {
+                if(!SolveOneStep())
+                {
+                    // No method was found that could progress this puzzle
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool CheckAllCellsDefined()
+        {
+            foreach(Cell c in puzzle.Cells)
+                if(c.Value == 0)
+                    return false;
+            return true;
         }
     }
 }

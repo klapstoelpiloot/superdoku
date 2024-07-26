@@ -2,6 +2,7 @@
 using Superdoku.Data;
 using Superdoku.IO;
 using Superdoku.Solver;
+using System.Media;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -40,8 +41,22 @@ namespace Superdoku.Windows
                 return;
 
             PuzzleSolver solver = new PuzzleSolver(puzzle);
-            solver.SolveOneStep();
+            bool result = solver.SolveOneStep();
             canvas.InvalidateVisual();
+            if(!result)
+                SystemSounds.Beep.Play();
+        }
+
+        private void SolveCompleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(puzzle == null)
+                return;
+
+            PuzzleSolver solver = new PuzzleSolver(puzzle);
+            bool result = solver.SolveComplete();
+            canvas.InvalidateVisual();
+            if(!result)
+                SystemSounds.Beep.Play();
         }
     }
 }
