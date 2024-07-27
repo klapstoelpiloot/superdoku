@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:Superdoku"
         xmlns:windows="clr-namespace:Superdoku.Windows"
         mc:Ignorable="d"
-        Title="Superdoku" Height="600" Width="800">
+        Title="Superdoku" Height="600" Width="800" KeyDown="Window_KeyDown">
 	<DockPanel>
 		<ToolBar x:Name="toolbar" DockPanel.Dock="Top" Height="30" VerticalAlignment="Top">
+			<Button x:Name="newbutton" Click="NewButton_Click" Padding="8,4,8,4">New</Button>
 			<Button x:Name="openbutton" Click="OpenButton_Click" Padding="8,4,8,4">Open</Button>
+			<Button x:Name="copybutton" Click="CopyButton_Click" Padding="8,4,8,4" ToolTip="Copies the current puzzle to the clipboard">Copy</Button>
 			<Button x:Name="solvestepbutton" Click="SolveStepButton_Click" Padding="8,4,8,4">Step</Button>
 			<Button x:Name="solvecompletebutton" Click="SolveCompleteButton_Click" Padding="8,4,8,4">Solve</Button>
 		</ToolBar>

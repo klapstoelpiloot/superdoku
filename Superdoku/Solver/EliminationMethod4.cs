@@ -1,6 +1,6 @@
 ﻿using Superdoku.Data;
 using Superdoku.Tools;
-using System.Drawing;
+using PointI = System.Drawing.Point;
 
 namespace Superdoku.Solver
 {
@@ -28,7 +28,7 @@ namespace Superdoku.Solver
         {
             // Determine which values are not in this row yet
             List<int> missingvalues = Enumerable.Range(1, puzzle.Range).ToList();
-            foreach(int y in Enumerable.Range(0, puzzle.RegionRange))
+            foreach(int y in Enumerable.Range(0, puzzle.Range))
             {
                 Cell c = puzzle.Cells[x, y];
                 if(c.HasValue)
@@ -37,9 +37,9 @@ namespace Superdoku.Solver
             
             foreach(int v in missingvalues.Shuffle())
             {
-                Point? p = null;
+                PointI? p = null;
                 bool failed = false;
-                foreach(int y in Enumerable.Range(0, puzzle.RegionRange))
+                foreach(int y in Enumerable.Range(0, puzzle.Range))
                 {
                     if(!puzzle.Cells[x, y].HasValue && puzzle.CheckConstraints(v, x, y))
                     {
@@ -52,7 +52,7 @@ namespace Superdoku.Solver
                         }
                         else
                         {
-                            p = new Point(x, y);
+                            p = new PointI(x, y);
                         }
                     }
 

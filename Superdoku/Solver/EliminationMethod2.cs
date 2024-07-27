@@ -1,6 +1,6 @@
 ﻿using Superdoku.Data;
 using Superdoku.Tools;
-using System.Drawing;
+using PointI = System.Drawing.Point;
 
 namespace Superdoku.Solver
 {
@@ -43,7 +43,7 @@ namespace Superdoku.Solver
             
             foreach(int v in missingvalues.Shuffle())
             {
-                Point? p = null;
+                PointI? p = null;
                 bool failed = false;
                 foreach(int x in Enumerable.Range(rx * puzzle.RegionRange, puzzle.RegionRange))
                 {
@@ -60,7 +60,7 @@ namespace Superdoku.Solver
                             }
                             else
                             {
-                                p = new Point(x, y);
+                                p = new PointI(x, y);
                             }
                         }
                     }
