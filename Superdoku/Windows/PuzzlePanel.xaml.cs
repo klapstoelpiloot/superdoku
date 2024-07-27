@@ -10,8 +10,8 @@ namespace Superdoku.Windows
     public partial class PuzzlePanel : UserControl
     {
         private static readonly Pen CellLine = new Pen(Brushes.Gray, 1);
-        private static readonly Pen RegionLine = new Pen(Brushes.DimGray, 3);
-        private static readonly Pen BorderLine = new Pen(Brushes.DimGray, 3);
+        private static readonly Pen RegionLine = new Pen(Brushes.DimGray, 4);
+        private static readonly Pen BorderLine = new Pen(Brushes.DimGray, 4);
         private static readonly Typeface ValueFont = new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Bold, FontStretches.Normal);
         private static readonly Typeface OptionsFont = new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
         private static readonly Brush ValueFontBrush = Brushes.Black;

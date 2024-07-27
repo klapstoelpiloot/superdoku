@@ -9,7 +9,12 @@
         /// Definite value for this cell.
         /// When this is 0, then no definite value has been assigned.
         /// </summary>
-        public int Value { get; set; } = 0;
+        public int Value { get; private set; } = 0;
+
+        /// <summary>
+        /// Returns True when a definitive value has been set for this cell.
+        /// </summary>
+        public bool HasValue => Value > 0;
 
         /// <summary>
         /// True when this cell is fixed (given as part of the puzzle),
@@ -56,6 +61,12 @@
         public void ClearOptions()
         {
             options.Clear();
+        }
+
+        public void SetValue(int value)
+        {
+            Value = value;
+            ClearOptions();
         }
 
         public static int ValueOfElement(char e) { return Array.IndexOf(ELEMENTS, e); }

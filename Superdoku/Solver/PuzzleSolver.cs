@@ -8,7 +8,9 @@ namespace Superdoku.Solver
         // These are the different methods in order in which we will try to use them
         private readonly ISolverMethod[] methods = [
                 new EliminationMethod1(),
-                new EliminationMethod2()
+                new EliminationMethod2(),
+                new EliminationMethod3(),
+                new EliminationMethod4(),
             ];
 
         private readonly Puzzle puzzle;

@@ -19,7 +19,7 @@ namespace Superdoku.Solver
             {
                 foreach(int y in Enumerable.Range(0, puzzle.Range).Shuffle())
                 {
-                    if(puzzle.Cells[x, y].Value == 0)
+                    if(!puzzle.Cells[x, y].HasValue)
                     {
                         if(TryCell(puzzle, x, y))
                             return true;
@@ -70,11 +70,10 @@ namespace Superdoku.Solver
                 }
             }
 
-            // CHeck if we have found a definitive value
+            // Check if we have found a definitive value
             if(options.Count == 1)
             {
-                c.Value = options[0];
-                c.ClearOptions();
+                c.SetValue(options[0]);
                 return true;
             }
             else

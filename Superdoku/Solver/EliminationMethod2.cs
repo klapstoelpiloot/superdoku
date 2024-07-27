@@ -36,7 +36,7 @@ namespace Superdoku.Solver
                 foreach(int y in Enumerable.Range(ry * puzzle.RegionRange, puzzle.RegionRange))
                 {
                     Cell c = puzzle.Cells[x, y];
-                    if(c.Value > 0)
+                    if(c.HasValue)
                         missingvalues.Remove(c.Value);
                 }
             }
@@ -49,7 +49,7 @@ namespace Superdoku.Solver
                 {
                     foreach(int y in Enumerable.Range(ry * puzzle.RegionRange, puzzle.RegionRange))
                     {
-                        if(CheckPosition(puzzle, v, x, y))
+                        if(!puzzle.Cells[x, y].HasValue && puzzle.CheckConstraints(v, x, y))
                         {
                             if(p.HasValue)
                             {
@@ -72,48 +72,12 @@ namespace Superdoku.Solver
                 if(p.HasValue && !failed)
                 {
                     // We have found a definitive value
-                    Cell c = puzzle.Cells[p.Value.X, p.Value.Y];
-                    c.Value = v;
-                    c.ClearOptions();
+                    puzzle.Cells[p.Value.X, p.Value.Y].SetValue(v);
                     return true;
                 }
             }
 
             return false;
-        }
-
-        private bool CheckPosition(Puzzle puzzle, int value, int x, int y)
-        {
-            // Check the same row
-            for(int x1 = 0; x1 < puzzle.Range; x1++)
-            {
-                int v = puzzle.Cells[x1, y].Value;
-                if((x1 != x) && (v == value))
-                    return false;
-            }
-
-            // Check the same column
-            for(int y1 = 0; y1 < puzzle.Range; y1++)
-            {
-                int v = puzzle.Cells[x, y1].Value;
-                if((y1 != y) && (v == value))
-                    return false;
-            }
-
-            // Eliminate options from cells in the same region
-            int rxs = (x / puzzle.RegionRange) * puzzle.RegionRange;
-            int rys = (y / puzzle.RegionRange) * puzzle.RegionRange;
-            for(int rx = rxs; rx < (rxs + puzzle.RegionRange); rx++)
-            {
-                for(int ry = rys; ry < (rys + puzzle.RegionRange); ry++)
-                {
-                    int v = puzzle.Cells[rx, ry].Value;
-                    if((rx != x) && (ry != y) && (v == value))
-                        return false;
-                }
-            }
-
-            return true;
         }
     }
 }
