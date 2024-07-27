@@ -71,7 +71,7 @@ namespace Superdoku.Windows
 			if((puzzle != null) && canvas.MouseCell.HasValue)
 			{
 				Cell c = puzzle.Cells[canvas.MouseCell.Value.X, canvas.MouseCell.Value.Y];
-				if(!c.Fixed)
+				if(!c.IsFixed)
 				{
 					switch(e.Key)
 					{

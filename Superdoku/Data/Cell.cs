@@ -20,7 +20,7 @@
         /// True when this cell is fixed (given as part of the puzzle),
         /// False when this cell can be changed by the user.
         /// </summary>
-        public bool Fixed { get; set; } = false;
+        public bool IsFixed { get; set; } = false;
 
         /// <summary>
         /// Value options to consider for this cell.

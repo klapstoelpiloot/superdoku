@@ -47,7 +47,7 @@ namespace Superdoku.IO
                     int y = i / p.Range;
                     Cell cell = p.Cells[x, y];
                     cell.SetValue(Cell.ValueOfElement(c));
-                    cell.Fixed = true;
+                    cell.IsFixed = true;
                 }
                 else
                 {

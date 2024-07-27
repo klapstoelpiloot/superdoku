@@ -18,7 +18,7 @@ namespace Superdoku.Windows
 		private static readonly Typeface OptionsFont = new Typeface(new FontFamily("Segoe UI"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
 		private static readonly Brush ValueFontBrush = Brushes.Black;
 		private static readonly Brush OptionsFontBrush = Brushes.DimGray;
-		private static readonly Brush FixedCellBrush = new SolidColorBrush(Color.FromRgb(240, 240, 240));
+		private static readonly Brush FixedCellBrush = new SolidColorBrush(Color.FromRgb(230, 230, 230));
 		private static readonly Brush BackgroundBrush = Brushes.White;
 		private const double ValueFontSizeFactor = 0.7;
 		private const double OptionsFontSizeFactor = 0.25;
@@ -96,7 +96,7 @@ namespace Superdoku.Windows
 			{
 				for(int y = 0; y < puzzle.Range; y++)
 				{
-					if(puzzle.Cells[x, y].Fixed)
+					if(puzzle.Cells[x, y].IsFixed)
 					{
 						Rect r = new Rect(plefttop.X + x * pcellsize, plefttop.Y + y * pcellsize, pcellsize, pcellsize);
 						dc.DrawRectangle(FixedCellBrush, null, r);
@@ -168,7 +168,7 @@ namespace Superdoku.Windows
 			dc.DrawRectangle(null, BorderLine, new Rect(plefttop.X, plefttop.Y, psize, psize));
 
 			// If the mouse is in a non-fixed cell, draw a highlight
-			if(MouseCell.HasValue && !puzzle.Cells[MouseCell.Value.X, MouseCell.Value.Y].Fixed)
+			if(MouseCell.HasValue && !puzzle.Cells[MouseCell.Value.X, MouseCell.Value.Y].IsFixed)
 			{
 				Rect hr = new Rect(plefttop.X + MouseCell.Value.X * pcellsize + CellHighlightInset, plefttop.Y + MouseCell.Value.Y * pcellsize + CellHighlightInset,
 					pcellsize - CellHighlightInset * 2.0, pcellsize - CellHighlightInset * 2.0);
