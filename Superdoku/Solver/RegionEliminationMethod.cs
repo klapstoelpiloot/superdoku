@@ -7,7 +7,7 @@ namespace Superdoku.Solver
     /// <summary>
     /// This checks each region if there is only a single location where a value can be within that region.
     /// </summary>
-    public class EliminationMethod2 : ISolverMethod
+    public class RegionEliminationMethod : ISolverMethod
     {
         /// <summary>
         /// Attempts to progress the puzzle one step further.

@@ -5,9 +5,9 @@ using PointI = System.Drawing.Point;
 namespace Superdoku.Solver
 {
     /// <summary>
-    /// This checks each row if there is only a single location where a value can be within that row.
+    /// This checks each column if there is only a single location where a value can be within that column.
     /// </summary>
-    public class EliminationMethod3 : ISolverMethod
+    public class ColumnEliminationMethod : ISolverMethod
     {
         /// <summary>
         /// Attempts to progress the puzzle one step further.
@@ -15,20 +15,20 @@ namespace Superdoku.Solver
         /// </summary>
         public bool SolveOneStep(Puzzle puzzle)
         {
-            foreach(int ry in Enumerable.Range(0, puzzle.Range).Shuffle())
+            foreach(int rx in Enumerable.Range(0, puzzle.Range).Shuffle())
             {
-                if(DoRow(puzzle, ry))
+                if(DoColumn(puzzle, rx))
                     return true;
             }
             return false;
         }
 
         // Returns True when a definitive value has been found for the specified cell
-        private bool DoRow(Puzzle puzzle, int y)
+        private bool DoColumn(Puzzle puzzle, int x)
         {
             // Determine which values are not in this row yet
             List<int> missingvalues = Enumerable.Range(1, puzzle.Range).ToList();
-            foreach(int x in Enumerable.Range(0, puzzle.Range))
+            foreach(int y in Enumerable.Range(0, puzzle.Range))
             {
                 Cell c = puzzle.Cells[x, y];
                 if(c.HasValue)
@@ -39,7 +39,7 @@ namespace Superdoku.Solver
             {
                 PointI? p = null;
                 bool failed = false;
-                foreach(int x in Enumerable.Range(0, puzzle.Range))
+                foreach(int y in Enumerable.Range(0, puzzle.Range))
                 {
                     if(!puzzle.Cells[x, y].HasValue && puzzle.CheckConstraints(v, x, y))
                     {
