@@ -80,5 +80,16 @@ namespace UnitTests.Data
             bool result = p.CheckConstraints(v, x, y);
             Assert.That(result, Is.EqualTo(expected));
         }
+
+		[TestCase("....45.........1..3.......7...........2................8.......9..............3..", 0, 0, 1, 2, 6, 7, 8)]
+		[TestCase("....45.........1..3.......7...........2................8.......9..............3..", 2, 2, 1, 4, 5, 6, 8, 9)]
+		[TestCase("....45.........1..3.......7...........2................8.......9..............3..", 0, 2, 3)]
+        public void TestDetermineOptions(string puzzlestr, int x, int y, params int[] expected)
+        {
+            MemoryStream stream = new MemoryStream(Encoding.ASCII.GetBytes(puzzlestr));
+            Puzzle p = PuzzleFileReader.Read(stream);
+            List<int> result = p.DetermineOptions(x, y);
+            Assert.That(result, Is.EquivalentTo(expected));
+        }
     }
 }

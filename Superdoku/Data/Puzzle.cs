@@ -80,5 +80,44 @@
 
             return true;
         }
+
+        /// <summary>
+        /// Check which values are possible for the specified cell by calling CheckConstraints and returns a list of the options.
+        /// When the specified cell already has a definitive value, this method returns that value as a single item in the list.
+        /// </summary>
+        public List<int> DetermineOptions(int x, int y)
+        {
+            List<int> options = new List<int>(Range);
+            if(Cells[x, y].Value > 0)
+            {
+                options.Add(Cells[x, y].Value);
+            }
+            else
+            {
+                foreach(int v in Enumerable.Range(1, Range))
+                {
+                    if(CheckConstraints(v, x, y))
+                        options.Add(v);
+                }
+            }
+            return options;
+        }
+
+        /// <summary>
+        /// Check which values are possible for the entire puzzle by calling CheckConstraints and returns an array with a list of the options for every cell.
+        /// When the specified cell already has a definitive value, this method returns that value as a single item in the list.
+        /// </summary>
+        public List<int>[,] DetermineOptions()
+        {
+            List<int>[,] options = new List<int>[Range, Range];
+            foreach(int x in Enumerable.Range(0, Range))
+            {
+                foreach(int y in Enumerable.Range(0, Range))
+                {
+                    options[x, y] = DetermineOptions(x, y);
+                }
+            }
+            return options;
+        }
     }
 }
