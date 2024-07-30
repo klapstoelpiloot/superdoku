@@ -38,7 +38,7 @@ namespace Superdoku.IO
 		public Puzzle Deserialize(string str)
         {
             // Determine puzzle size
-            str = str.Trim();
+            str = str.Trim('\r', '\n', '\t');
             double sized = Math.Sqrt(str.Length);
             int sizei = (int)sized;
             if (sized - sizei > 0.0001)
