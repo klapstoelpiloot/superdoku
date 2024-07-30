@@ -9,7 +9,7 @@ namespace Superdoku.IO
     /// is either an element (from Cell.ELEMENTS) or a 'whitespace' character.
     /// Example: ...........7.4.8........27..6..15.3....7.3.4.8....6..2...5...2...4..13...18.7.45.
     /// </summary>
-	public class SingleLinePuzzleFormatter
+	public class SingleLineFormatter
     {
         private static readonly char[] WHITESPACE_CHARS = ['.', ' ', 'X', 'x', '0'];
 

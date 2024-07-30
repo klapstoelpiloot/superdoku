@@ -5,7 +5,7 @@ namespace Superdoku.IO
 {
     public class PuzzleFileReader
     {
-        private static SingleLinePuzzleFormatter singlelineformatter = new SingleLinePuzzleFormatter();
+        private static SingleLineFormatter singlelineformatter = new SingleLineFormatter();
 
         public static Puzzle Read(string filename)
         {
